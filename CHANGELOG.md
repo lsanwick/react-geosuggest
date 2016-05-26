@@ -1,3 +1,12 @@
+## 1.23.0 (2016-05-25)
+
+
+#### Bug Fixes
+
+* **Geosuggest:** initialise Google Maps in componentWillMount instead of componentDidMount ([2f326427](https://github.com/ubilabs/react-geosuggest/commit/2f3264279a1aca5164ced0bb4f5c40e46c608a2c), closes [#130](https://github.com/ubilabs/react-geosuggest/issues/130))
+* **example:** add Google Maps API key ([9c3c6d25](https://github.com/ubilabs/react-geosuggest/commit/9c3c6d2596bdafbe633c9b33f125ac4a313c9534), closes [#107](https://github.com/ubilabs/react-geosuggest/issues/107))
+
+
 ## 1.23.0 (2016-05-19)
 
 
