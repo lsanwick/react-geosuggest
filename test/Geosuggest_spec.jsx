@@ -55,6 +55,7 @@ describe('Component: Geosuggest', () => {
         radius="20"
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
+        debounce={0}
       />
     );
   });
