@@ -12,15 +12,23 @@ class Input extends React.Component {
   /**
    * When the input got changed
    */
-  onChange() {
+  onChange = () => {
     this.props.onChange(this.refs.input.value);
+  }
+
+  onFocus = () => {
+    this.props.onFocus();
+  }
+
+  onBlur = () => {
+    this.props.onBlur();
   }
 
   /**
    * When a key gets pressed in the input
    * @param  {Event} event The keypress event
    */
-  onInputKeyDown(event) {
+  onInputKeyDown = event => {
     switch (event.which) {
       case 40: // DOWN
         event.preventDefault();
@@ -68,10 +76,10 @@ class Input extends React.Component {
       type='text'
       {...attributes}
       value={this.props.value}
-      onKeyDown={this.onInputKeyDown.bind(this)}
-      onChange={this.onChange.bind(this)}
-      onFocus={this.props.onFocus.bind(this)}
-      onBlur={this.props.onBlur.bind(this)} />;
+      onKeyDown={this.onInputKeyDown}
+      onChange={this.onChange}
+      onFocus={this.onFocus}
+      onBlur={this.onBlur} />;
   }
 }
 
@@ -81,14 +89,7 @@ class Input extends React.Component {
  */
 Input.defaultProps = {
   className: '',
-  value: '',
-  onChange: () => {},
-  onFocus: () => {},
-  onBlur: () => {},
-  onNext: () => {},
-  onPrev: () => {},
-  onSelect: () => {},
-  onEscape: () => {}
+  value: ''
 };
 
 export default Input;

@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import classnames from 'classnames';
 
 /**
@@ -6,27 +6,30 @@ import classnames from 'classnames';
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-export default ({
-  isActive = false,
-  className = '',
-  suggest = {},
-  onMouseDown = () => {},
-  onMouseOut = () => {},
-  onSelect = () => {}
-}) => {
-  const classes = classnames(
-    'geosuggest-item',
-    className,
-    {'geosuggest-item--active': isActive}
-  );
+export default class SuggestItem extends React.Component {
+  onClick = event => {
+    event.preventDefault();
+    this.props.onSelect(this.props.suggest);
+  }
 
-  return <li className={classes}
-    onMouseDown={onMouseDown}
-    onMouseOut={onMouseOut}
-    onClick={event => {
-      event.preventDefault();
-      onSelect();
-    }}>
-      {suggest.label}
-  </li>;
+  render() {
+    const classes = classnames(
+      'geosuggest-item',
+      this.props.className,
+      {'geosuggest-item--active': this.props.isActive}
+    );
+
+    return <li className={classes}
+      onMouseDown={this.props.onMouseDown}
+      onMouseOut={this.props.onMouseOut}
+      onClick={this.onClick}>
+        {this.props.suggest.label}
+    </li>;
+  }
+}
+
+SuggestItem.defaultProps = {
+  isActive: false,
+  className: '',
+  suggest: {}
 };

@@ -34,9 +34,6 @@ class Geosuggest extends React.Component {
       timer: null
     };
 
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onAfterInputChange = this.onAfterInputChange.bind(this)
-
     if (props.debounce) {
       this.onAfterInputChange =
         debounce(this.onAfterInputChange, props.debounce);
@@ -86,11 +83,11 @@ class Geosuggest extends React.Component {
    * When the input got changed
    * @param {String} userInput The input value of the user
    */
-  onInputChange(userInput) {
+  onInputChange = userInput => {
     this.setState({userInput}, this.onAfterInputChange);
   }
 
-  onAfterInputChange() {
+  onAfterInputChange = () => {
     this.showSuggests();
     this.props.onChange(this.state.userInput);
   }
@@ -98,7 +95,7 @@ class Geosuggest extends React.Component {
   /**
    * When the input gets focused
    */
-  onInputFocus() {
+  onInputFocus = () => {
     this.props.onFocus();
     this.showSuggests();
   }
@@ -106,11 +103,21 @@ class Geosuggest extends React.Component {
   /**
    * When the input gets blurred
    */
-  onInputBlur() {
+  onInputBlur = () => {
     if (!this.state.ignoreBlur) {
       this.hideSuggests();
     }
   }
+
+  onNext = () => this.activateSuggest('next')
+
+  onPrev = () => this.activateSuggest('prev')
+
+  onSelect = () => this.selectSuggest(this.state.activeSuggest)
+
+  onSuggestMouseDown = () => this.setState({ignoreBlur: true})
+
+  onSuggestMouseOut = () => this.setState({ignoreBlur: false})
 
   /**
    * Focus the input
@@ -132,7 +139,7 @@ class Geosuggest extends React.Component {
    * Clear the input and close the suggestion pane
    */
   clear() {
-    this.setState({userInput: ''}, () => this.hideSuggests());
+    this.setState({userInput: ''}, this.hideSuggests);
   }
 
   /**
@@ -219,7 +226,7 @@ class Geosuggest extends React.Component {
   /**
    * Hide the suggestions
    */
-  hideSuggests() {
+  hideSuggests = () => {
     this.props.onBlur();
     const timer = setTimeout(() => {
       this.setState({isSuggestsHidden: true});
@@ -267,7 +274,7 @@ class Geosuggest extends React.Component {
    * When an item got selected
    * @param {GeosuggestItem} suggest The selected suggest item
    */
-  selectSuggest(suggest) {
+  selectSuggest = suggest => {
     if (!suggest) {
       suggest = {
         label: this.state.userInput
@@ -328,18 +335,18 @@ class Geosuggest extends React.Component {
                  ref='input'
                  value={this.state.userInput}
                  onChange={this.onInputChange}
-                 onFocus={this.onInputFocus.bind(this)}
-                 onBlur={this.onInputBlur.bind(this)}
-                 onNext={() => this.activateSuggest('next')}
-                 onPrev={() => this.activateSuggest('prev')}
-                 onSelect={() => this.selectSuggest(this.state.activeSuggest)}
-                 onEscape={this.hideSuggests.bind(this)} {...attributes} />,
+                 onFocus={this.onInputFocus}
+                 onBlur={this.onInputBlur}
+                 onNext={this.onNext}
+                 onPrev={this.onPrev}
+                 onSelect={this.onSelect}
+                 onEscape={this.hideSuggests} {...attributes} />,
       suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
                    suggests={this.state.suggests}
                    activeSuggest={this.state.activeSuggest}
-                   onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
-                   onSuggestMouseOut={() => this.setState({ignoreBlur: false})}
-                   onSuggestSelect={this.selectSuggest.bind(this)}/>;
+                   onSuggestMouseDown={this.onSuggestMouseDown}
+                   onSuggestMouseOut={this.onSuggestMouseOut}
+                   onSuggestSelect={this.selectSuggest}/>;
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">
