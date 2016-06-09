@@ -37,7 +37,7 @@ npm install react-geosuggest --save
 
 ## Usage
 
-The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below.
+The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below. Note that input is debounced with a delay of 250ms.
 
 ### ES6:
 
@@ -141,6 +141,12 @@ Type: `Object`
 Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
+
+#### ignoreTab
+Type: `Boolean`
+Default: `false`
+
+When the tab key is pressed, the `onSelect` handler is invoked. Set to true to not invoke `onSelect` on tab press.
 
 #### onFocus
 Type: `Function`
