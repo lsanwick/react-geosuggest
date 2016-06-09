@@ -42,6 +42,7 @@ describe('Component: Geosuggest', () => {
     onFocus = null,
     onChange = null,
     onBlur = null,
+    clock = null,
     render = props => {
       onSuggestSelect = sinon.spy();
       onActivateSuggest = sinon.spy();
@@ -73,6 +74,9 @@ describe('Component: Geosuggest', () => {
         />
       );
     };
+
+  beforeEach(() => clock = sinon.useFakeTimers());
+  afterEach(() => clock.restore());
 
   describe('default', () => {
     beforeEach(() => render());
@@ -110,6 +114,7 @@ describe('Component: Geosuggest', () => {
         geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       input.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      clock.tick(500);
       TestUtils.Simulate.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
@@ -137,6 +142,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      clock.tick(500);
       expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
@@ -151,11 +157,6 @@ describe('Component: Geosuggest', () => {
       TestUtils.Simulate.change(geoSuggestInput);
       component.clear();
       expect(geoSuggestInput.value).to.equal('');
-    });
-
-    it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
-      expect(geoSuggestInput.style['border-color']).to.be.equal('#000');
     });
 
     it('should add external inline `style` to suggestList component', () => { // eslint-disable-line max-len

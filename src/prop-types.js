@@ -18,7 +18,6 @@ export default {
   bounds: React.PropTypes.object,
   country: React.PropTypes.string,
   types: React.PropTypes.array,
-  debounce: React.PropTypes.number,
   googleMaps: React.PropTypes.object,
   onSuggestSelect: React.PropTypes.func,
   onFocus: React.PropTypes.func,
