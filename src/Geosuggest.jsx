@@ -2,7 +2,7 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import {debounce} from 'lodash';
+import debounce from 'just-debounce';
 
 import defaults from './defaults';
 import propTypes from './prop-types';
@@ -36,11 +36,7 @@ class Geosuggest extends React.Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onAfterInputChange = this.onAfterInputChange.bind(this);
-
-    if (props.debounce) {
-      this.onAfterInputChange =
-        debounce(this.onAfterInputChange, props.debounce);
-    }
+    this.onAfterInputChange = debounce(this.onAfterInputChange, 250);
   }
 
   /**

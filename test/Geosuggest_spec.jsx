@@ -42,23 +42,26 @@ describe('Component: Geosuggest', () => {
     onSuggestSelect,
     onActivateSuggest,
     isLocationCalled,
-    isActivateCalled;
+    isActivateCalled,
+    clock;
 
   beforeEach(() => {
     isLocationCalled = false;
     isActivateCalled = false;
     onSuggestSelect = () => isLocationCalled = true;
     onActivateSuggest = () => isActivateCalled = true;
+    clock = sinon.useFakeTimers();
 
     component = TestUtils.renderIntoDocument(
       <Geosuggest
         radius="20"
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
-        debounce={0}
       />
     );
   });
+
+  afterEach(() => clock.restore());
 
   it('should have an input field', () => {
     const input = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__input');
@@ -82,6 +85,7 @@ describe('Component: Geosuggest', () => {
     const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input');
     input.value = 'New';
     TestUtils.Simulate.change(geoSuggestInput);
+    clock.tick(500);
     TestUtils.Simulate.keyDown(geoSuggestInput, {key: "keyDown", keyCode: 40, which: 40});
     expect(isActivateCalled).to.be.true;
   });

@@ -13,7 +13,6 @@ export default {
   bounds: null,
   country: null,
   types: null,
-  debounce: 250,
   googleMaps: null,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
