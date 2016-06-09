@@ -38,7 +38,7 @@ npm install react-geosuggest --save
 
 ## Usage
 
-The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below.
+The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below. Note that input is debounced with a delay of 250ms.
 
 ```
 var Geosuggest = require('react-geosuggest');
@@ -121,13 +121,6 @@ Type: `Object`
 Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
-
-#### debounce
-Type: `Number`
-Default: `250`
-
-Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
-Specify `0` if you wish to fetch suggestions after every keystroke.
 
 #### onFocus
 Type: `Function`
